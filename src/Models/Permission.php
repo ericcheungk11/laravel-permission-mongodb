@@ -110,7 +110,7 @@ class Permission extends Model implements PermissionInterface
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany($this->helpers->getModelForGuard($this->attributes['guard_name']), 'users', 'permissionIds', 'userIds');
+        return $this->belongsToMany($this->helpers->getModelForGuard($this->attributes['guardName']), 'users', 'permissionIds', 'userIds');
     }
 
     /**
