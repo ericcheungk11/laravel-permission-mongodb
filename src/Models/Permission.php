@@ -35,7 +35,7 @@ class Permission extends Model implements PermissionInterface
      */
     public function __construct(array $attributes = [])
     {
-        $attributes['guard_name'] = $attributes['guard_name'] ?? (new Guard())->getDefaultName(static::class);
+        $attributes['guardName'] = $attributes['guardName'] ?? (new Guard())->getDefaultName(static::class);
 
         parent::__construct($attributes);
 
@@ -56,14 +56,14 @@ class Permission extends Model implements PermissionInterface
     public static function create(array $attributes = [])
     {
         $helpers = new Helpers();
-        $attributes['guard_name'] = $attributes['guard_name'] ?? (new Guard())->getDefaultName(static::class);
+        $attributes['guardName'] = $attributes['guardName'] ?? (new Guard())->getDefaultName(static::class);
 
         if (static::getPermissions()->where('name', $attributes['name'])->where(
-            'guard_name',
-            $attributes['guard_name']
+            'guardName',
+            $attributes['guardName']
         )->first()) {
             $name = (string)$attributes['name'];
-            $guardName = (string)$attributes['guard_name'];
+            $guardName = (string)$attributes['guardName'];
             throw new PermissionAlreadyExists($helpers->getPermissionAlreadyExistsMessage($name, $guardName));
         }
 
@@ -85,11 +85,11 @@ class Permission extends Model implements PermissionInterface
         $guardName = $guardName ?? (new Guard())->getDefaultName(static::class);
 
         $permission = static::getPermissions()->filter(function ($permission) use ($name, $guardName) {
-            return $permission->name === $name && $permission->guard_name === $guardName;
+            return $permission->name === $name && $permission->guardName === $guardName;
         })->first();
 
         if (!$permission) {
-            $permission = static::create(['name' => $name, 'guard_name' => $guardName]);
+            $permission = static::create(['name' => $name, 'guardName' => $guardName]);
         }
 
         return $permission;
@@ -101,7 +101,7 @@ class Permission extends Model implements PermissionInterface
      */
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(config('permission.models.role'));
+        return $this->belongsToMany(config('permission.models.role'), 'roles', 'permissionIds', 'roleIds');
     }
 
     /**
@@ -110,7 +110,7 @@ class Permission extends Model implements PermissionInterface
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany($this->helpers->getModelForGuard($this->attributes['guard_name']));
+        return $this->belongsToMany($this->helpers->getModelForGuard($this->attributes['guard_name']), 'users', 'permissionIds', 'userIds');
     }
 
     /**
@@ -128,7 +128,7 @@ class Permission extends Model implements PermissionInterface
         $guardName = $guardName ?? (new Guard())->getDefaultName(static::class);
 
         $permission = static::getPermissions()->filter(function ($permission) use ($name, $guardName) {
-            return $permission->name === $name && $permission->guard_name === $guardName;
+            return $permission->name === $name && $permission->guardName === $guardName;
         })->first();
 
         if (!$permission) {

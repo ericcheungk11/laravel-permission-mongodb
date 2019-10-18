@@ -16,8 +16,8 @@ class BladeTest extends TestCase
         $roleModel->create(['name' => 'member']);
         $roleModel->create(['name' => 'writer']);
         $roleModel->create(['name' => 'intern']);
-        $roleModel->create(['name' => 'super-admin', 'guard_name' => 'admin']);
-        $roleModel->create(['name' => 'moderator', 'guard_name' => 'admin']);
+        $roleModel->create(['name' => 'super-admin', 'guardName' => 'admin']);
+        $roleModel->create(['name' => 'moderator', 'guardName' => 'admin']);
     }
 
     /** @test */

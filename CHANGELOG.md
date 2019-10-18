@@ -57,7 +57,7 @@ All Notable changes to `laravel-permission-mongodb` will be documented in this f
 ## 1.7.0 - 2018-03-21
 
 ### Added
- - Support getting guard_name from extended model
+ - Support getting guardName from extended model
  - Add required permissions and roles in exception object
  - Add the option to hide and show permissions in exceptions
 

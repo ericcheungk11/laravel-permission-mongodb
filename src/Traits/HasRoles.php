@@ -44,7 +44,7 @@ trait HasRoles
      */
     public function roles()
     {
-        return $this->belongsToMany(config('permission.models.role'));
+        return $this->belongsToMany(config('permission.models.role'), 'roles', 'userIds', 'roleIds');
     }
 
     /**
@@ -59,7 +59,7 @@ trait HasRoles
     {
         $roles = $this->convertToRoleModels($roles);
 
-        return $query->whereIn('role_ids', $roles->pluck('_id'));
+        return $query->whereIn('roleIds', $roles->pluck('_id'));
     }
 
     /**

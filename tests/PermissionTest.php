@@ -31,15 +31,15 @@ class PermissionTest extends TestCase
     /** @test */
     public function it_belongs_to_a_guard()
     {
-        $permission = \app(\config('permission.models.permission'))->create(['name' => 'can-edit', 'guard_name' => 'admin']);
+        $permission = \app(\config('permission.models.permission'))->create(['name' => 'can-edit', 'guardName' => 'admin']);
 
-        $this->assertEquals('admin', $permission->guard_name);
+        $this->assertEquals('admin', $permission->guardName);
     }
 
     /** @test */
     public function it_belongs_to_the_default_guard_by_default()
     {
-        $this->assertEquals($this->app['config']->get('auth.defaults.guard'), $this->testUserPermission->guard_name);
+        $this->assertEquals($this->app['config']->get('auth.defaults.guard'), $this->testUserPermission->guardName);
     }
 
     /** @test */

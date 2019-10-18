@@ -46,7 +46,7 @@ trait HasPermissions
      */
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(config('permission.models.permission'));
+        return $this->belongsToMany(config('permission.models.permission'), 'permissions', 'roleIds', 'permissionIds');
     }
 
     /**
@@ -138,9 +138,9 @@ trait HasPermissions
      */
     protected function ensureModelSharesGuard(Model $roleOrPermission)
     {
-        if (! $this->getGuardNames()->contains($roleOrPermission->guard_name)) {
+        if (! $this->getGuardNames()->contains($roleOrPermission->guardName)) {
             $expected = $this->getGuardNames();
-            $given    = $roleOrPermission->guard_name;
+            $given    = $roleOrPermission->guardName;
             $helpers  = new Helpers();
 
             throw new GuardDoesNotMatch($helpers->getGuardDoesNotMatchMessage($expected, $given));
@@ -350,7 +350,7 @@ trait HasPermissions
         }
         $roles = $roles->unique();
 
-        return $query->orWhereIn('permission_ids', $permissions->pluck('_id'))
-            ->orWhereIn('role_ids', $roles->pluck('_id'));
+        return $query->orWhereIn('permissionIds', $permissions->pluck('_id'))
+            ->orWhereIn('roleIds', $roles->pluck('_id'));
     }
 }

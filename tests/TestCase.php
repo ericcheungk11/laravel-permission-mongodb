@@ -120,11 +120,11 @@ abstract class TestCase extends Orchestra
         Admin::create(['email' => 'admin@user.com']);
         $app[Role::class]->create(['name' => 'testRole']);
         $app[Role::class]->create(['name' => 'testRole2']);
-        $app[Role::class]->create(['name' => 'testAdminRole', 'guard_name' => 'admin']);
+        $app[Role::class]->create(['name' => 'testAdminRole', 'guardName' => 'admin']);
         $app[Permission::class]->create(['name' => 'edit-articles']);
         $app[Permission::class]->create(['name' => 'edit-news']);
         $app[Permission::class]->create(['name' => 'edit-categories']);
-        $app[Permission::class]->create(['name' => 'admin-permission', 'guard_name' => 'admin']);
+        $app[Permission::class]->create(['name' => 'admin-permission', 'guardName' => 'admin']);
     }
 
     /**

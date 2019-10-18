@@ -28,7 +28,7 @@ class CreateRole extends Command
 
         $role = $roleClass::create([
             'name'       => $name,
-            'guard_name' => $guard
+            'guardName' => $guard
         ]);
 
         $this->info("Role `{$role->name}` created");

@@ -16,11 +16,11 @@ class CreatePermissionCollections extends Migration
         $collectionNames = config('permission.collection_names');
 
         Schema::table($collectionNames['roles'], function (Blueprint $collection) {
-            $collection->unique(['name', 'guard_name']);
+            $collection->unique(['name', 'guardName']);
         });
 
         Schema::table($collectionNames['permissions'], function (Blueprint $collection) {
-            $collection->unique(['name', 'guard_name']);
+            $collection->unique(['name', 'guardName']);
         });
     }
 

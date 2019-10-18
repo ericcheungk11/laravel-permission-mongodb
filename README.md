@@ -237,7 +237,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 }
 ```
 
-> Note: that if you need to use `HasRoles` trait with another model ex.`Page` you will also need to add `protected $guard_name = 'web';` as well to that model or you would get an error
+> Note: that if you need to use `HasRoles` trait with another model ex.`Page` you will also need to add `protected $guardName = 'web';` as well to that model or you would get an error
 
 ```php
 use Jenssegers\Mongodb\Eloquent\Model as Model;
@@ -247,7 +247,7 @@ class Page extends Model
 {
     use HasRoles;
 
-    protected $guard_name = 'web'; // or whatever guard you want to use
+    protected $guardName = 'web'; // or whatever guard you want to use
 
     // ...
 }
@@ -285,7 +285,7 @@ $role->revokePermissionTo($permission);
 $permission->removeRole($role);
 ```
 
-If you're using multiple guards the `guard_name` attribute needs to be set as well. Read about it in the [using multiple guards](#using-multiple-guards) section of the readme.
+If you're using multiple guards the `guardName` attribute needs to be set as well. Read about it in the [using multiple guards](#using-multiple-guards) section of the readme.
 
 The `HasRoles` trait adds Moloquent relationships to your models, which can be accessed directly or used as a base query:
 
@@ -540,7 +540,7 @@ However when using multiple guards they will act like namespaces for your permis
 
 ### Using permissions and roles with multiple guards
 
-When creating new permissions and roles, if no guard is specified, then the **first** defined guard in `auth.guards` config array will be used. When creating permissions and roles for specific guards you'll have to specify their `guard_name` on the model:
+When creating new permissions and roles, if no guard is specified, then the **first** defined guard in `auth.guards` config array will be used. When creating permissions and roles for specific guards you'll have to specify their `guardName` on the model:
 
 ```php
 // Create a superadmin role for the admin users
@@ -548,11 +548,11 @@ When creating new permissions and roles, if no guard is specified, then the **fi
 $user->hasPermissionTo('publish articles', 'admin');
 ```
 
-> **Note**: When determining whether a role/permission is valid on a given model, it chooses the guard in this order: first the `$guard_name` property of the model; then the guard in the config (through a provider); then the first-defined guard in the `auth.guards` config array; then the `auth.defaults.guard` config.
+> **Note**: When determining whether a role/permission is valid on a given model, it chooses the guard in this order: first the `$guardName` property of the model; then the guard in the config (through a provider); then the first-defined guard in the `auth.guards` config array; then the `auth.defaults.guard` config.
 
 ### Assigning permissions and roles to guard users
 
-You can use the same methods to assign permissions and roles to users as described above in [using permissions via roles](#using-permissions-via-roles). Just make sure the `guard_name` on the permission or role matches the guard of the user, otherwise a `GuardDoesNotMatch` exception will be thrown.
+You can use the same methods to assign permissions and roles to users as described above in [using permissions via roles](#using-permissions-via-roles). Just make sure the `guardName` on the permission or role matches the guard of the user, otherwise a `GuardDoesNotMatch` exception will be thrown.
 
 ### Using blade directives with multiple guards
 

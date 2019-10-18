@@ -25,7 +25,7 @@ class CommandTest extends TestCase
         ]);
 
         $this->assertCount(1, Role::where('name', 'new-role')
-            ->where('guard_name', 'api')
+            ->where('guardName', 'api')
             ->get());
     }
 
@@ -46,7 +46,7 @@ class CommandTest extends TestCase
         ]);
 
         $this->assertCount(1, Permission::where('name', 'new-permission')
-            ->where('guard_name', 'api')
+            ->where('guardName', 'api')
             ->get());
     }
 

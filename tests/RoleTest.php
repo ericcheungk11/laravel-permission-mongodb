@@ -17,7 +17,7 @@ class RoleTest extends TestCase
 
         Permission::create(['name' => 'other-permission']);
 
-        Permission::create(['name' => 'wrong-guard-permission', 'guard_name' => 'admin']);
+        Permission::create(['name' => 'wrong-guard-permission', 'guardName' => 'admin']);
     }
 
     /** @test */
@@ -264,15 +264,15 @@ class RoleTest extends TestCase
     /** @test */
     public function it_belongs_to_a_guard()
     {
-        $role = \app(\config('permission.models.role'))->create(['name' => 'admin', 'guard_name' => 'admin']);
+        $role = \app(\config('permission.models.role'))->create(['name' => 'admin', 'guardName' => 'admin']);
 
-        $this->assertEquals('admin', $role->guard_name);
+        $this->assertEquals('admin', $role->guardName);
     }
 
     /** @test */
     public function it_belongs_to_the_default_guard_by_default()
     {
-        $this->assertEquals($this->app['config']->get('auth.defaults.guard'), $this->testUserRole->guard_name);
+        $this->assertEquals($this->app['config']->get('auth.defaults.guard'), $this->testUserRole->guardName);
     }
 
     /** @test */

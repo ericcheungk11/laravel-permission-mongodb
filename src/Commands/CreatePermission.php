@@ -23,7 +23,7 @@ class CreatePermission extends Command
 
         $permission = $permissionClass::create([
             'name'       => $this->argument('name'),
-            'guard_name' => $this->argument('guard')
+            'guardName' => $this->argument('guard')
         ]);
 
         $this->info("Permission `{$permission->name}` created");

@@ -11,12 +11,12 @@ class MultipleGuardsTest extends TestCase
     {
         $this->testUser->givePermissionTo(Permission::create([
             'name'       => 'do_this',
-            'guard_name' => 'web',
+            'guardName' => 'web',
         ]));
 
         $this->testUser->givePermissionTo(Permission::create([
             'name'       => 'do_that',
-            'guard_name' => 'api',
+            'guardName' => 'api',
         ]));
 
         $this->assertTrue($this->testUser->hasPermissionTo('do_this', 'web'));

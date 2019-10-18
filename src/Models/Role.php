@@ -35,7 +35,7 @@ class Role extends Model implements RoleInterface
      */
     public function __construct(array $attributes = [])
     {
-        $attributes['guard_name'] = $attributes['guard_name'] ?? (new Guard())->getDefaultName(static::class);
+        $attributes['guardName'] = $attributes['guardName'] ?? (new Guard())->getDefaultName(static::class);
 
         parent::__construct($attributes);
 
@@ -55,12 +55,12 @@ class Role extends Model implements RoleInterface
      */
     public static function create(array $attributes = [])
     {
-        $attributes['guard_name'] = $attributes['guard_name'] ?? (new Guard())->getDefaultName(static::class);
+        $attributes['guardName'] = $attributes['guardName'] ?? (new Guard())->getDefaultName(static::class);
         $helpers = new Helpers();
 
-        if (static::where('name', $attributes['name'])->where('guard_name', $attributes['guard_name'])->first()) {
+        if (static::where('name', $attributes['name'])->where('guardName', $attributes['guardName'])->first()) {
             $name = (string)$attributes['name'];
-            $guardName = (string)$attributes['guard_name'];
+            $guardName = (string)$attributes['guardName'];
             throw new RoleAlreadyExists($helpers->getRoleAlreadyExistsMessage($name, $guardName));
         }
 
@@ -82,11 +82,11 @@ class Role extends Model implements RoleInterface
         $guardName = $guardName ?? (new Guard())->getDefaultName(static::class);
 
         $role = static::where('name', $name)
-            ->where('guard_name', $guardName)
+            ->where('guardName', $guardName)
             ->first();
 
         if (!$role) {
-            $role = static::create(['name' => $name, 'guard_name' => $guardName]);
+            $role = static::create(['name' => $name, 'guardName' => $guardName]);
         }
 
         return $role;
@@ -107,7 +107,7 @@ class Role extends Model implements RoleInterface
         $guardName = $guardName ?? (new Guard())->getDefaultName(static::class);
 
         $role = static::where('name', $name)
-            ->where('guard_name', $guardName)
+            ->where('guardName', $guardName)
             ->first();
 
         if (!$role) {
@@ -124,7 +124,7 @@ class Role extends Model implements RoleInterface
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany($this->helpers->getModelForGuard($this->attributes['guard_name']));
+        return $this->belongsToMany($this->helpers->getModelForGuard($this->attributes['guardName']), 'users', 'roleIds', 'userIds');
     }
 
     /**
@@ -143,9 +143,9 @@ class Role extends Model implements RoleInterface
             $permission = $this->getPermissionClass()->findByName($permission, $this->getDefaultGuardName());
         }
 
-        if (!$this->getGuardNames()->contains($permission->guard_name)) {
+        if (!$this->getGuardNames()->contains($permission->guardName)) {
             $expected = $this->getGuardNames();
-            $given = $permission->guard_name;
+            $given = $permission->guardName;
 
             throw new GuardDoesNotMatch($this->helpers->getGuardDoesNotMatchMessage($expected, $given));
         }
